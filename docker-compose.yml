@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+
+  db:
+    image: postgres:15
+    container_name: eventos_db
+    environment:
+      POSTGRES_DB: eventos
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    container_name: eventos_api
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: db
+      DB_NAME: eventos
+      DB_USER: admin
+      DB_PASSWORD: admin
+    depends_on:
+      - db
